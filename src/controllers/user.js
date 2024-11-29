@@ -41,7 +41,6 @@ export const updateUser = async (req, res) => {
     const userId = req.params.id;
     const newData = req.body;
     const fileData = req.file; // Lấy dữ liệu file ảnh từ request
-
     try {
         if (fileData) {
             // Nếu có ảnh mới được tải lên

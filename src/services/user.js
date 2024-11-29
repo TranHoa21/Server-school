@@ -1,4 +1,4 @@
-import User from "../models/Users.js"; // Giả sử bạn đã xuất mô hình User từ models
+import User from "../models/Users"; // Giả sử bạn đã xuất mô hình User từ models
 import bcrypt from 'bcryptjs';
 
 export const createNewUser = async ({ name, email, password }) => {
@@ -52,7 +52,7 @@ export const getUserById = async (userId) => {
         if (!userId) {
             throw new Error('Invalid user ID');
         }
-        const user = await User.findOne({ id: userId }); // Truy vấn theo id
+        const user = await User.findOne({ _id: userId });
         return user;
     } catch (error) {
         console.log('check err', error);
@@ -62,7 +62,7 @@ export const getUserById = async (userId) => {
 
 export const updateUser = async (userId, newData, fileData) => {
     try {
-        const user = await User.findOne({ id: userId });
+        const user = await User.findOne({ _id: userId });
         if (!user) {
             throw new Error('Người dùng không tồn tại');
         }

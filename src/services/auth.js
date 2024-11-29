@@ -1,5 +1,5 @@
 import User from '../models/Users.js';
-import PasswordReset from '../models/Users.js'; // Đảm bảo import đúng mô hình PasswordReset
+import PasswordReset from '../models/PasswordReset.js'; // Đảm bảo import đúng mô hình PasswordReset
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import crypto from 'crypto';
@@ -146,7 +146,7 @@ export const updatePassword = async (email, newPassword) => {
     }
 };
 
-export const login = async ({ email, password }) => {
+export const login = async ({ email, password, res }) => {
     try {
         const user = await User.findOne({ email });
 
@@ -157,7 +157,8 @@ export const login = async ({ email, password }) => {
             };
         }
 
-        const passwordMatch = await bcrypt.compare(password, user.password);
+
+        const passwordMatch = bcrypt.compare(password, user.password);
 
         if (!passwordMatch) {
             return {
@@ -166,7 +167,7 @@ export const login = async ({ email, password }) => {
             };
         }
 
-        const token = generateToken(user._id);
+        const token = generateToken(user.id, res);
 
         return {
             err: 0,
